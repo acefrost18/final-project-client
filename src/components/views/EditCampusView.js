@@ -1,4 +1,3 @@
-// NewStudentView.js
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -31,18 +30,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NewStudentView = (props) => {
+const EditCampusView = (props) => {
   const { handleChange, handleSubmit } = props;
   const classes = useStyles();
   const history = useHistory();
 
   // State to track form validation errors
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    imageUrl: '', // with a default value
-    GPA: '',
+        name: '',
+        address: '',
+        description: '',
+        campusImage: '',
+        redirect: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -51,24 +50,21 @@ const NewStudentView = (props) => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate first name
-    if (!formData.firstname.trim()) {
-      newErrors.firstname = 'First name is required';
+    // Validate campus name
+    if (!formData.name.trim()) {
+      newErrors.name = 'Campus name is required';
     }
 
-    // Validate last name
-    if (!formData.lastname.trim()) {
-      newErrors.lastname = 'Last name is required';
+    // Validate address
+    if (!formData.address.trim()) {
+      newErrors.address = 'Address is required';
     }
 
-    // Validate GPA
-    const gpaValue = parseFloat(formData.GPA);
-    if (formData.GPA.trim() === '' || isNaN(gpaValue) || gpaValue < 0.0 || gpaValue > 4.0) {
-      newErrors.GPA = 'GPA must be a decimal between 0.0 and 4.0';
-    }
+    // Add more validation rules as needed
 
     return newErrors;
   };
+
 
   const handleFormSubmit = async (e) => {
     if (e) {
@@ -81,7 +77,7 @@ const NewStudentView = (props) => {
       // No errors, proceed with form submission
       await handleSubmit(formData);
       // Redirect to the student's page after form submission
-      history.push('/students'); // Update the route as needed
+      history.push('/campus'); // Update the route as needed
     } else {
       // Update state to display errors
       setErrors(formErrors);
@@ -98,37 +94,31 @@ const NewStudentView = (props) => {
 
   return (
     <div>
-      <h1>New Student</h1>
+      <h1>Edit Campus</h1>
 
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>
             <Typography style={{ fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e' }}>
-              Add a Student
+              Edit Current Campus
             </Typography>
           </div>
           <form style={{ textAlign: 'center' }} onSubmit={handleFormSubmit}>
-            <label style={{ color: '#11153e', fontWeight: 'bold' }}>First Name: </label>
-            <input type="text" name="firstname" onChange={(e) => handleChangeLocal(e)} />
-            {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
+            <label style={{ color: '#11153e', fontWeight: 'bold' }}>Name: </label>
+            <input type="text" name="name" onChange={(e) => handleChangeLocal(e)} />
+            {errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
             <br />
             <br />
 
-            <label style={{ color: '#11153e', fontWeight: 'bold' }}>Last Name: </label>
-            <input type="text" name="lastname" onChange={(e) => handleChangeLocal(e)} />
-            {errors.lastname && <p style={{ color: 'red' }}>{errors.lastname}</p>}
+            <label style={{ color: '#11153e', fontWeight: 'bold' }}>Address: </label>
+            <input type="text" name="address" onChange={(e) => handleChangeLocal(e)} />
+            {errors.address && <p style={{ color: 'red' }}>{errors.address}</p>}
             <br />
             <br />
 
-            <label style={{ color: '#11153e', fontWeight: 'bold' }}>Email: </label>
-            <input type="text" name="email" onChange={(e) => handleChangeLocal(e)} />
-            {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-            <br />
-            <br />
-
-            <label style={{ color: '#11153e', fontWeight: 'bold' }}>GPA: </label>
-            <input type="text" name="GPA" onChange={(e) => handleChangeLocal(e)} />
-            {errors.GPA && <p style={{ color: 'red' }}>{errors.GPA}</p>}
+            <label style={{ color: '#11153e', fontWeight: 'bold' }}>Description: </label>
+            <input type="text" name="description" onChange={(e) => handleChangeLocal(e)} />
+            {errors.description && <p style={{ color: 'red' }}>{errors.description}</p>}
             <br />
             <br />
 
@@ -150,4 +140,4 @@ const NewStudentView = (props) => {
   );
 };
 
-export default NewStudentView;
+export default EditCampusView

@@ -1,4 +1,3 @@
-// NewStudentView.js
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -31,7 +30,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NewStudentView = (props) => {
+const EditStudentView = (props) => {
   const { handleChange, handleSubmit } = props;
   const classes = useStyles();
   const history = useHistory();
@@ -74,6 +73,7 @@ const NewStudentView = (props) => {
     if (e) {
       e.preventDefault(); // Ensure that the event is defined before calling preventDefault
     }
+    
 
     // Validate form
     const formErrors = validateForm();
@@ -90,21 +90,24 @@ const NewStudentView = (props) => {
 
   const handleChangeLocal = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    console.log(`Updating ${name} to:`, value);
+  
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value !== undefined ? value : '', // Handle undefined values
+    }));
+    console.log('Updated formData:', formData);
   };
 
   return (
     <div>
-      <h1>New Student</h1>
+      <h1>Edit Student</h1>
 
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>
             <Typography style={{ fontWeight: 'bold', fontFamily: 'Courier, sans-serif', fontSize: '20px', color: '#11153e' }}>
-              Add a Student
+              Edit Current Student
             </Typography>
           </div>
           <form style={{ textAlign: 'center' }} onSubmit={handleFormSubmit}>
@@ -150,4 +153,4 @@ const NewStudentView = (props) => {
   );
 };
 
-export default NewStudentView;
+export default EditStudentView;

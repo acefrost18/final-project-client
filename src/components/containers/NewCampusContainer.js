@@ -3,18 +3,17 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import NewStudentView from '../views/NewStudentView';
-import { addStudentThunk } from '../../store/thunks';
+import NewCampusView from '../views/NewCampusView';
+import { addCampusThunk } from '../../store/thunks';
 
-class NewStudentContainer extends Component {
+class NewCampusContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
-      GPA: '',
-      email: '',
-      imageUrl: '',
+      name: '',
+      address: '',
+      description: '',
+      campusImage: '',
       redirect: false,
     };
   }
@@ -27,7 +26,7 @@ class NewStudentContainer extends Component {
 
   handleSubmit = async (formData) => {
     // Dispatch your addCampusThunk action here
-    await this.props.addStudentThunk(formData);
+    await this.props.addCampusThunk(formData);
   }
 
   componentWillUnmount() {
@@ -36,13 +35,13 @@ class NewStudentContainer extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/students" />;
+      return <Redirect to="/campuses" />;
     }
 
     return (
       <div>
         <Header />
-        <NewStudentView
+        <NewCampusView
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
@@ -53,8 +52,8 @@ class NewStudentContainer extends Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    addStudentThunk: (campus) => dispatch(addStudentThunk(campus)),
+    addCampusThunk: (campus) => dispatch(addCampusThunk(campus)),
   };
 };
 
-export default connect(null, mapDispatch)(NewStudentContainer);
+export default connect(null, mapDispatch)(NewCampusContainer);

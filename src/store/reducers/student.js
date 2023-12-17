@@ -6,6 +6,7 @@ Depending on the Action object, the Reducer updates the State and return the new
 It also defines the State and its default initial value.
 ================================================== */
 import { FETCH_STUDENT } from "../actions/actionTypes";  // Import Action Type
+import { EDIT_STUDENT } from "../actions/actionTypes";
 
 // Define default Initial state
 const initialState = {
@@ -17,6 +18,12 @@ const student = (state=initialState, action) => {  // Use "initialState" as defa
   switch (action.type) {
     case FETCH_STUDENT:
       return action.payload;
+      case EDIT_STUDENT:
+      return state.map(student => { 
+        return (
+          student.id===action.payload.id ? action.payload : student
+        );
+      });
     default:
       // If the Reducer doesn't recognize the Action Type, returns the previous (current) State unchanged.
       return state;
